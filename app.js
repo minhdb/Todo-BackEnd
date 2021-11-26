@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use('/auth', authRouter);
-app.use('/post', postRouter);
+app.use('/tidi', todoRouter);
 
 
 app.use(express.static(path.join(__dirname, 'build')));
