@@ -5,11 +5,6 @@ const Todo = require('../models/Todo');
 
 const privateKey = process.env.JWT_PRIVATE_KEY;
 
-router.get('/', async function(req, res, next) {
-    const todos = await Post.find().where('author').equals(req.payload.id).exec()
-    return res.status(200).json({"todos": todos})
-});
-
 router.use(function(req, res, next) {
     console.log(req.header("Authorization"))
       if (req.header("Authorization")) {
@@ -24,6 +19,12 @@ router.use(function(req, res, next) {
       }
       next()
 })
+
+router.get('/', async function(req, res, next) {
+    const todos = await Todo.find().where('author').equals(req.payload.id).exec()
+    return res.status(200).json({"todos": todos})
+});
+
 
 router.get('/:todoId', async function(req, res, next) {
     //mongoose find query to retrieve post where postId == req.params.postId
@@ -41,7 +42,7 @@ router.post('/', async function (req, res) {
   
       await todo.save().then( savedTodo => {
           return res.status(201).json({
-              "id": savedTodo._id,
+              "todoId": savedTodo._id,
               "title": savedTodo.title,
               "description": savedTodo.description,
               "author": savedTodo.author
