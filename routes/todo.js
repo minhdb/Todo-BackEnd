@@ -29,17 +29,17 @@ router.get('/:todoId', async function(req, res, next) {
     //mongoose find query to retrieve post where postId == req.params.postId
     const todo = await Todo.findOne().where('_id').equals(req.params.todoId).exec()
     
-    return res.status(200).json(post)
+    return res.status(200).json(todo)
 });
 
 router.post('/', async function (req, res) {
-    const post = new Post({
+    const todo = new Todo({
       "title": req.body.title,
       "description": req.body.description,
       "user": req.payload.id
       })
   
-      await post.save().then( savedTodo => {
+      await todo.save().then( savedTodo => {
           return res.status(201).json({
               "id": savedTodo._id,
               "title": savedTodo.title,
