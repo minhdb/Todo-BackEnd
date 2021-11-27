@@ -21,7 +21,7 @@ router.use(function(req, res, next) {
 })
 
 router.get('/', async function(req, res, next) {
-    const todos = await Todo.find().where('author').equals(req.payload.todoId).exec()
+    const todos = await Todo.find().where('author').equals(req.payload.id).exec()
     return res.status(200).json({"todos": todos})
 });
 
@@ -37,12 +37,12 @@ router.post('/', async function (req, res) {
     const todo = new Todo({
       "title": req.body.title,
       "description": req.body.description,
-      "author": req.payload.todo
+      "author": req.payload.id
       })
   
       await todo.save().then( savedTodo => {
           return res.status(201).json({
-              "todoId": savedTodo._id,
+              "id": savedTodo._id,
               "title": savedTodo.title,
               "description": savedTodo.description,
               "author": savedTodo.author
