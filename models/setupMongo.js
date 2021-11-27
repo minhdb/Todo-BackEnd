@@ -6,7 +6,7 @@ function connect() {
     const options = {userNewUrlParser:true};
     mongoose.connect(uri, options).then(
         () => { console.log("Database connection successful.");},
-        err => { console.log("Error connecting database: ", er); }
+        err => { console.log("Error connecting database: ", err); }
     )
 }
 
