@@ -6,7 +6,7 @@ const Todo = require('../models/Todo');
 const privateKey = process.env.JWT_PRIVATE_KEY;
 
 router.get('/', async function(req, res, next) {
-    const todos = await Post.find().where('user').equals(req.payload.id).exec()
+    const todos = await Post.find().where('author').equals(req.payload.id).exec()
     return res.status(200).json({"todos": todos})
 });
 
@@ -36,7 +36,7 @@ router.post('/', async function (req, res) {
     const todo = new Todo({
       "title": req.body.title,
       "description": req.body.description,
-      "user": req.payload.id
+      "author": req.payload.id
       })
   
       await todo.save().then( savedTodo => {
@@ -44,7 +44,7 @@ router.post('/', async function (req, res) {
               "id": savedTodo._id,
               "title": savedTodo.title,
               "description": savedTodo.description,
-              "user": savedTodo.user
+              "author": savedTodo.author
           })
       }).catch( error => {
           return res.status(500).json({"error": error.message})
